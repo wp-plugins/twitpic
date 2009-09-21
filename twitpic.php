@@ -2,13 +2,14 @@
 /*
 Plugin Name: TwitPic
 Plugin URI: http://www.grobekelle.de/wordpress-plugins
-Description: Displays the latest pictures from your Twitpic account in the sidebar of your blog. Get more <a href="http://www.grobekelle.de/wordpress-plugins">Wordpress Plugins</a> by <a href="http://www.grobekelle.de">Grobekelle</a>.
-Version: 0.1
+Description: Displays the latest pictures from your Twitpic account in the sidebar of your blog and converts links to images hostet at twitpic.com to embedded images. Get more <a href="http://www.grobekelle.de/wordpress-plugins">Wordpress Plugins</a> by <a href="http://www.grobekelle.de">Grobekelle</a>.
+Version: 0.2
 Author: grobekelle
 Author URI: http://www.grobekelle.de
 */
 
 /**
+ * v0.2 21.09.2009 added content filter to convert links to twitpic to embedded images
  * v0.1 07.07.2009 initial release
  */
 class TwitPic {
@@ -21,11 +22,12 @@ class TwitPic {
   var $options;
   var $locale;
   var $cache_file;
+  var $sizes;
 
   function TwitPic() {
     $this->id         = 'twitpic';
     $this->title      = 'TwitPic';
-    $this->version    = '0.1';
+    $this->version    = '0.2';
     $this->plugin_url = 'http://www.grobekelle.de/wordpress-plugins';
     $this->name       = 'TwitPic v'. $this->version;
     $this->url        = get_bloginfo('wpurl'). '/wp-content/plugins/' . $this->id;
@@ -33,6 +35,11 @@ class TwitPic {
 	  $this->locale     = get_locale();
     $this->path       = dirname(__FILE__);
     $this->cache_file = $this->path . '/cache/cache.html';
+    $this->sizes      = array(
+      'mini' => 'Mini (75x75)',
+      'thumb' => 'Thumb (150x150)',
+      'full' => 'Full size'
+    );
 
 	  if(empty($this->locale)) {
 		  $this->locale = 'en_US';
@@ -44,6 +51,9 @@ class TwitPic {
 
     if(!is_admin()) {
       add_filter('wp_head', array(&$this, 'blogHeader'));
+      if(intval($this->options['convert_images_content']) == 1) {
+        add_filter('the_content', array(&$this, 'contentFilter'));
+      }
     }
     else {
       add_action('admin_menu', array( &$this, 'optionMenu')); 
@@ -67,7 +77,7 @@ class TwitPic {
     /**
      * nasty checkbox handling
      */
-    foreach(array('link_images', 'nofollow', 'show_twitter_link', 'show_twitpic_link', 'target_blank') as $field ) {
+    foreach(array('convert_images_content', 'link_images_content', 'link_images', 'nofollow', 'show_twitter_link', 'show_twitpic_link', 'target_blank') as $field ) {
       if(!isset($_POST[$this->id][$field])) {
         $_POST[$this->id][$field] = '0';
       }
@@ -148,12 +158,30 @@ class TwitPic {
 </th>
 </tr>
 
+</table>
+
+<h2><?php _e('Pictures in post or pages', $this->id); ?></h2>
+<table class="form-table">
+
 <tr>
 <th scope="row" colspan="4" class="th-full">
 <label for="">
-<input name="<?=$this->id?>[show_twitpic_link]" type="checkbox" id="" value="1" <?php echo $this->options['show_twitpic_link']=='1'?'checked="checked"':''; ?> />
-<?php _e('Show a link to my Twitpic profile below the widget?', $this->id); ?></label>
+<input name="<?=$this->id?>[convert_images_content]" type="checkbox" id="" value="1" <?php echo $this->options['convert_images_content']=='1'?'checked="checked"':''; ?> />
+<?php _e('Convert links to twitpic images in posts to embedded images?', $this->id); ?></label>
 </th>
+</tr>
+
+<tr>
+<th scope="row" colspan="4" class="th-full">
+<label for="">
+<input name="<?=$this->id?>[link_images_content]" type="checkbox" id="" value="1" <?php echo $this->options['link_images_content']=='1'?'checked="checked"':''; ?> />
+<?php _e('Link those images to twitpic?', $this->id); ?></label>
+</th>
+</tr>
+
+<tr valign="top">
+<th scope="row"><?php _e('Image size', $this->id); ?></th>
+<td><?php echo $this->getSelectbox($this->id. '[image_size_content]', $this->sizes, $this->options['image_size_content']); ?></td>
 </tr>
 
 
@@ -168,6 +196,17 @@ class TwitPic {
 <?php
   }
 
+  function getSelectbox($name, $items, $selected) {
+
+    $data = '';
+
+    foreach($items as $k => $v) {
+      $data .= sprintf('<option value="%s"%s>%s</option>', $k, $k == $selected ? ' selected="selected"' : '', $v);
+    }
+
+    return '<select name="'. $name .'">'. $data . '</select>';
+  }
+
   function updateOptions($options) {
 
     foreach($this->options as $k => $v) {
@@ -180,9 +219,10 @@ class TwitPic {
 	}
   
   function loadOptions() {
+  
 #  delete_option($this->id);
     $this->options = get_option($this->id);
-
+#var_dump($this->options);
     if(!$this->options) {
       $this->options = array(
         'installed' => time(),
@@ -195,12 +235,42 @@ class TwitPic {
         'link_images' => 1,
         'show_twitpic_link' => 1,
         'show_twitter_link' => 1,
-        'title' => 'TwitPics'
+        'title' => 'TwitPics',
+        
+        'convert_images_content' => 0,
+        'link_images_content' => 1,
+        'image_size_content' => 'thumb' // mini, thumb, full
 			);
 
       add_option($this->id, $this->options, $this->name, 'yes');
-
     }
+
+    // update to v0.2
+    if(!array_key_exists('convert_images_content', $this->options)) {
+      $this->options['convert_images_content'] = 0;
+      $this->options['link_images_content'] = 1;
+      $this->options['image_size_content'] = 'thumb';
+      $this->updateOptions($this->options);
+    }
+
+  }
+  
+  function contentFilter($buffer) {
+
+    $pattern = '#<a[^>]*href="(http://(www\.)?twitpic\.com/(.*?))"(.*?)[^>]*>(.*?)</a>#is';
+
+    if(intval(preg_match_all($pattern, $buffer, $matches, PREG_SET_ORDER)) > 0) {
+      foreach($matches as $match) {
+        $image = sprintf('<img src="http://www.twitpic.com/show/%s/%s" />', $this->options['image_size_content'], $match[3]);
+        if(intval($this->options['link_images_content']) == 1) {
+          $image = sprintf('<a href="%s" rel="nofollow" target="_blank">%s</a>', $match[1], $image);
+        }
+        $data = sprintf('<div class="twitpic">%s<br /><small><a href="http://www.grobekelle.de/wordpress-plugins">Twitpic Plugin</a> by <a href="http://www.grobekelle.de">Grobekelle</a></small></div>', $image);
+        $buffer = str_replace($match[0], $data, $buffer);
+      }
+    }
+    
+    return $buffer;
   }
   
   function httpGet($url) {

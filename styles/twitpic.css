@@ -48,3 +48,16 @@
   text-decoration: none;
   font-size: 9px;
 }
+
+/* embedded images */
+.twitpic {
+  border: 10px solid #fff;
+}
+.twitpic img {
+  border: 0;
+}
+.twitpic small, .twitpic small a {
+  color: #ccc;
+  text-decoration: none;
+  border-bottom: 1px dashed #ccc;
+}
