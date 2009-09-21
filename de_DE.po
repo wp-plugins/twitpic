@@ -1,0 +1,171 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: twitpic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-21 12:21+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: twitpic.php:90
+#: svn/tags/0.1/twitpic.php:80
+#: svn/trunk/twitpic.php:80
+msgid "Settings saved!"
+msgstr "Die Einstellungen wurden gespeichert!"
+
+#: twitpic.php:97
+#: svn/tags/0.1/twitpic.php:87
+#: svn/trunk/twitpic.php:87
+msgid "Warning! The cachedirectory is missing or not writeable!"
+msgstr "Das Cache-Verzeichnis existiert nicht oder ist nicht beschreibbar!"
+
+#: twitpic.php:101
+#: svn/tags/0.1/twitpic.php:91
+#: svn/trunk/twitpic.php:91
+msgid "Title"
+msgstr "Titel"
+
+#: twitpic.php:102
+#: svn/tags/0.1/twitpic.php:92
+#: svn/trunk/twitpic.php:92
+msgid "Title is shown above the Widget. If left empty can break your layout in widget mode!"
+msgstr "Der Titel wird im Widget-Modus oberhalb des Widgets angezeit."
+
+#: twitpic.php:106
+#: svn/tags/0.1/twitpic.php:96
+#: svn/trunk/twitpic.php:96
+msgid "Username"
+msgstr "Benutzername"
+
+#: twitpic.php:108
+#: svn/tags/0.1/twitpic.php:98
+#: svn/trunk/twitpic.php:98
+msgid "Your Twitter/Twitpic username!"
+msgstr "Dein Twitter Benutzername."
+
+#: twitpic.php:112
+#: svn/tags/0.1/twitpic.php:102
+#: svn/trunk/twitpic.php:102
+msgid "Limit"
+msgstr "Anzahl"
+
+#: twitpic.php:114
+#: svn/tags/0.1/twitpic.php:104
+#: svn/trunk/twitpic.php:104
+msgid "Max. number of images to display!"
+msgstr "Wie viele Bilder sollen angezeigt werden?"
+
+#: twitpic.php:118
+#: svn/tags/0.1/twitpic.php:108
+#: svn/trunk/twitpic.php:108
+msgid "Widget width"
+msgstr "Breite"
+
+#: twitpic.php:120
+#: svn/tags/0.1/twitpic.php:110
+#: svn/trunk/twitpic.php:110
+msgid "Width of widget wrapper."
+msgstr "Breite des Widgets."
+
+#: twitpic.php:124
+#: svn/tags/0.1/twitpic.php:114
+#: svn/trunk/twitpic.php:114
+msgid "Image width"
+msgstr "Breite"
+
+#: twitpic.php:126
+#: svn/tags/0.1/twitpic.php:116
+#: svn/trunk/twitpic.php:116
+msgid "Width of thumbnails."
+msgstr "Breite der Thumbnails."
+
+#: twitpic.php:133
+#: svn/tags/0.1/twitpic.php:123
+#: svn/trunk/twitpic.php:123
+msgid "Link images to their Twitpic page?"
+msgstr "Verlinke Bilder zur Twitpic-Seite?"
+
+#: twitpic.php:141
+#: svn/tags/0.1/twitpic.php:131
+#: svn/trunk/twitpic.php:131
+msgid "Set the link to relation nofollow?"
+msgstr "Seteze die Links auf rel=\"nofollow\"?"
+
+#: twitpic.php:149
+#: svn/tags/0.1/twitpic.php:139
+#: svn/trunk/twitpic.php:139
+msgid "Open link in new window?"
+msgstr "&Ouml;ffne Links in einem neuen Browserfenster?"
+
+#: twitpic.php:157
+#: svn/tags/0.1/twitpic.php:147
+#: svn/trunk/twitpic.php:147
+msgid "Show a link to my Twitter profile below the widget?"
+msgstr "Zeige einen Link zu deinem Twitter-Profil?"
+
+#: twitpic.php:163
+msgid "Pictures in post or pages"
+msgstr "Bilder in Beitr&auml;gen und Seiten"
+
+#: twitpic.php:170
+msgid "Convert links to twitpic images in posts to embedded images?"
+msgstr "Wnadle Links zu Bilder auf Twitpic.com in eingebettete Bilder um?"
+
+#: twitpic.php:178
+#, fuzzy
+msgid "Link those images to twitpic?"
+msgstr "Verlinke Bilder zur Twitpic-Seite?"
+
+#: twitpic.php:183
+msgid "Image size"
+msgstr "Gr&ouml;&szlig;e"
+
+#: twitpic.php:191
+#: svn/tags/0.1/twitpic.php:163
+#: svn/trunk/twitpic.php:163
+msgid "save"
+msgstr "speichern"
+
+#: twitpic.php:379
+#: svn/tags/0.1/twitpic.php:309
+#: svn/trunk/twitpic.php:309
+#, php-format
+msgid "%s ago"
+msgstr "vor %s"
+
+#: twitpic.php:382
+#: svn/tags/0.1/twitpic.php:312
+#: svn/trunk/twitpic.php:312
+#, php-format
+msgid "at %s"
+msgstr "um %s"
+
+#: twitpic.php:391
+#: svn/tags/0.1/twitpic.php:321
+#: svn/trunk/twitpic.php:321
+msgid "Username missing! Please configure the plugin first!"
+msgstr "Der Benutzer muss zuerst angegeben werden!"
+
+#: twitpic.php:429
+#: svn/tags/0.1/twitpic.php:359
+#: svn/trunk/twitpic.php:359
+msgid "Follow me!"
+msgstr "Folge mir!"
+
+#: twitpic.php:433
+#: svn/tags/0.1/twitpic.php:363
+#: svn/trunk/twitpic.php:363
+msgid "My Twitpic!"
+msgstr "My Twitpic!"
+
+#: svn/tags/0.1/twitpic.php:155
+#: svn/trunk/twitpic.php:155
+msgid "Show a link to my Twitpic profile below the widget?"
+msgstr "Zeige einen Link zu deinem Twitpic-Profil?"
+
