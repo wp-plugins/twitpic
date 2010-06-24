@@ -1,10 +1,10 @@
 === TwitPic ===
 Contributors: grobekelle
-Donate link: http://www.grobekelle.de/donate
+Donate link: http://www.grobekelle.de
 Tags: twitpics, wordpress, twitter, tweets, twit, follower, friends, badge, widget, widgets, sidebar, admin, plugin, images, blogging, microblogging, twittpics, twitpic, twittpics, pictures, gallery, pics
 Requires at least: 2.0.2
 Tested up to: 2.7
-Stable tag: 0.2
+Stable tag: 0.3
 
 Displays your latest pictures from TwitPic in the sidebar of your blog. The plugin is widget ready and comes with many configuration options!
 
@@ -40,6 +40,7 @@ Yes, a Tweet gets cached for 30 minutes!
 
 == Change Log ==
 
+* v0.3 24.06.2010  fixed some minor xhtml issues to be even more compatible
 * v0.2 21.09.2009 added content filter to convert links to twitpic to embedded images
 * v0.1 14.07.2009 initial release
 

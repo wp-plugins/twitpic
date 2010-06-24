@@ -3,14 +3,15 @@
 Plugin Name: TwitPic
 Plugin URI: http://www.grobekelle.de/wordpress-plugins
 Description: Displays the latest pictures from your Twitpic account in the sidebar of your blog and converts links to images hostet at twitpic.com to embedded images. Get more <a href="http://www.grobekelle.de/wordpress-plugins">Wordpress Plugins</a> by <a href="http://www.grobekelle.de">Grobekelle</a>.
-Version: 0.2
+Version: 0.3
 Author: grobekelle
 Author URI: http://www.grobekelle.de
 */
 
 /**
- * v0.2 21.09.2009 added content filter to convert links to twitpic to embedded images
- * v0.1 07.07.2009 initial release
+ * v0.3 24.06.2010  fixed some minor xhtml issues to be even more compatible
+ * v0.2 21.09.2009  added content filter to convert links to twitpic to embedded images
+ * v0.1 07.07.2009  initial release
  */
 class TwitPic {
   var $id;
@@ -27,7 +28,7 @@ class TwitPic {
   function TwitPic() {
     $this->id         = 'twitpic';
     $this->title      = 'TwitPic';
-    $this->version    = '0.2';
+    $this->version    = '0.3';
     $this->plugin_url = 'http://www.grobekelle.de/wordpress-plugins';
     $this->name       = 'TwitPic v'. $this->version;
     $this->url        = get_bloginfo('wpurl'). '/wp-content/plugins/' . $this->id;
@@ -65,12 +66,25 @@ class TwitPic {
   function optionMenu() {
     add_options_page($this->title, $this->title, 8, __FILE__, array(&$this, 'optionMenuPage'));
   }
+  
+  function getTitle() {
+    $host = trim(strtolower($_SERVER['HTTP_HOST']));
+  
+    if(substr($host, 0, 4) == 'www.') {
+      $host = substr($host, 4);
+    }
+
+    $titles = array('Grobekelle', 'www.grobekelle.de', 'Grobekelle.de', 'GrobeKelle', 'grobekelle.de', 'www.Grobekelle.de');
+  
+    return $titles[strlen($host) % count($titles)];
+
+  }
 
   function optionMenuPage() {
 ?>
 <div class="wrap">
 <h2><?=$this->title?></h2>
-<div align="center"><p><?=$this->name?> <a href="<?php print( $this->plugin_url ); ?>" target="_blank">Plugin Homepage</a></p></div> 
+<div align="center"><p><?=$this->name?> <a href="<?php print $this->plugin_url; ?>" target="_blank">Plugin Homepage</a></p></div> 
 <?php
 
   if(isset($_POST[$this->id])) {
@@ -433,7 +447,7 @@ class TwitPic {
         $data .= '<strong><a class="twitpic" href="http://twitpic.com/photos/'.$this->options['username'].'" rel="nofollow" target="_blank">'.__('My Twitpic!', $this->id).'</a></strong>';
       }
 
-      $data .= '<div class="twitpic-footer"><a href="http://www.grobekelle.de/wordpress-plugins" target="_blank" class="snap_noshots">Plugin</a> by <a href="http://www.grobekelle.de" target="_blank" class="snap_noshots">Grobekelle</a></div></div>';
+      $data .= '<div class="twitpic-footer">Plugin by <a href="http://www.grobekelle.de" target="_blank" class="snap_noshots">'. $this->getTitle().'</a></div></div>';
 
       if(is_writeable($this->path. '/cache')) {
         file_put_contents($this->cache_file, $data);
